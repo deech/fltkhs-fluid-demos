@@ -29,7 +29,7 @@ Executable fltkhs-fluid-radio
     fltkhs
   default-language: Haskell2010
   default-extensions: FlexibleContexts
-  ghc-Options: -Werror -threaded -fcontext-stack=300
+  ghc-Options: -threaded -fcontext-stack=300
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: Radio
@@ -45,7 +45,7 @@ Executable fltkhs-fluid-tabs
     fltkhs
   default-language: Haskell2010
   default-extensions: FlexibleContexts
-  ghc-Options: -Werror -threaded -fcontext-stack=300
+  ghc-Options: -threaded -fcontext-stack=300
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: Tabs
@@ -61,7 +61,7 @@ Executable fltkhs-fluid-valuators
     fltkhs
   default-language: Haskell2010
   default-extensions: FlexibleContexts, AllowAmbiguousTypes
-  ghc-Options: -Werror -threaded -fcontext-stack=300
+  ghc-Options: -threaded -fcontext-stack=300
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: Valuators
@@ -76,7 +76,7 @@ Executable fltkhs-fluid-inactive
     bytestring,
     fltkhs
   default-language: Haskell2010
-  ghc-Options: -Werror -threaded -fcontext-stack=300
+  ghc-Options: -threaded -fcontext-stack=300
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: Inactive
@@ -91,7 +91,7 @@ Executable fltkhs-fluid-fast-slow
     bytestring,
     fltkhs
   default-language: Haskell2010
-  ghc-Options: -Werror -threaded -fcontext-stack=300
+  ghc-Options: -threaded -fcontext-stack=300
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: FastSlow
@@ -106,7 +106,7 @@ Executable fltkhs-fluid-tree
     bytestring,
     fltkhs
   default-language: Haskell2010
-  ghc-Options: -Werror -threaded -fcontext-stack=300
+  ghc-Options: -threaded -fcontext-stack=300
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules:
