@@ -33,6 +33,10 @@ Executable fltkhs-fluid-radio
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: Radio
+  if os(windows)
+   ghc-Options: -optl-mwindows
+  if os(darwin)
+   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -49,6 +53,10 @@ Executable fltkhs-fluid-tabs
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: Tabs
+  if os(windows)
+   ghc-Options: -optl-mwindows
+  if os(darwin)
+   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -65,6 +73,10 @@ Executable fltkhs-fluid-valuators
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: Valuators
+  if os(windows)
+   ghc-Options: -optl-mwindows
+  if os(darwin)
+   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -80,6 +92,10 @@ Executable fltkhs-fluid-inactive
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: Inactive
+  if os(windows)
+   ghc-Options: -optl-mwindows
+  if os(darwin)
+   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -95,6 +111,10 @@ Executable fltkhs-fluid-fast-slow
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: FastSlow
+  if os(windows)
+   ghc-Options: -optl-mwindows
+  if os(darwin)
+   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -112,5 +132,9 @@ Executable fltkhs-fluid-tree
   Other-Modules:
                 Tree,
                 TreeCallbacks
+  if os(windows)
+   ghc-Options: -optl-mwindows
+  if os(darwin)
+   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
