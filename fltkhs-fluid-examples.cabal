@@ -132,8 +132,6 @@ Executable fltkhs-fluid-tree
   Other-Modules:
                 Tree,
                 TreeCallbacks
-  if os(windows)
-   ghc-Options: -optl-mwindows
   if os(darwin)
    ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin)
