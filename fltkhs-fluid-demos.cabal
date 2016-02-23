@@ -26,7 +26,7 @@ Executable fltkhs-fluid-radio
   Build-Depends:
     base == 4.*,
     bytestring,
-    fltkhs >= 0.4.0.0
+    fltkhs >= 0.4.0.3
   default-language: Haskell2010
   default-extensions: FlexibleContexts
   ghc-Options: -threaded
@@ -46,7 +46,7 @@ Executable fltkhs-fluid-tabs
   Build-Depends:
     base == 4.*,
     bytestring,
-    fltkhs >= 0.4.0.0
+    fltkhs >= 0.4.0.3
   default-language: Haskell2010
   default-extensions: FlexibleContexts
   ghc-Options: -threaded
@@ -66,7 +66,7 @@ Executable fltkhs-fluid-valuators
   Build-Depends:
     base == 4.*,
     bytestring,
-    fltkhs >= 0.4.0.0
+    fltkhs >= 0.4.0.3
   default-language: Haskell2010
   default-extensions: FlexibleContexts, AllowAmbiguousTypes
   ghc-Options: -threaded
@@ -86,7 +86,7 @@ Executable fltkhs-fluid-inactive
   Build-Depends:
     base == 4.*,
     bytestring,
-    fltkhs >= 0.4.0.0
+    fltkhs >= 0.4.0.3
   default-language: Haskell2010
   ghc-Options: -threaded
   if impl(ghc >= 7.10) && flag(FastCompile)
@@ -105,7 +105,7 @@ Executable fltkhs-fluid-fast-slow
   Build-Depends:
     base == 4.*,
     bytestring,
-    fltkhs >= 0.4.0.0
+    fltkhs >= 0.4.0.3
   default-language: Haskell2010
   ghc-Options: -threaded
   if impl(ghc >= 7.10) && flag(FastCompile)
@@ -124,7 +124,7 @@ Executable fltkhs-fluid-tree
   Build-Depends:
     base == 4.*,
     bytestring,
-    fltkhs >= 0.4.0.0
+    fltkhs >= 0.4.0.3
   default-language: Haskell2010
   ghc-Options: -threaded
   if os(windows)
