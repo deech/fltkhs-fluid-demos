@@ -1,6 +1,6 @@
-name : fltkhs-fluid-examples
+name : fltkhs-fluid-demos
 version : 0.0.0.3
-synopsis : Fltkhs Fluid Examples
+synopsis : Fltkhs Fluid Demos
 description:
     Examples of using Fluid with FLTKHS
 license : MIT
@@ -8,12 +8,12 @@ license-file : LICENSE
 author : Aditya Siram
 build-type: Custom
 maintainer: aditya.siram@gmail.com
-homepage: http://github.com/deech/fltkhs-fluid-examples
+homepage: http://github.com/deech/fltkhs-fluid-demos
 category: UI,Graphics
 cabal-version: >=1.20
 source-repository head
   type: git
-  location: http://github.com/deech/fltkhs-fluid-examples
+  location: http://github.com/deech/fltkhs-fluid-demos
 
 Flag FastCompile
    Description: Turn off optimizations for faster compilation
