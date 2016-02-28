@@ -3,6 +3,6 @@ extra-package-dbs: []
 packages:
 - '.'
 extra-deps:
-- fltkhs-0.4.0.5
+- fltkhs-0.4.0.6
 - text-1.2.2.0
 resolver: lts-2.22
