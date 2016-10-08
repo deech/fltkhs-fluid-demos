@@ -7,7 +7,7 @@ Function {button_cb((Parent a Button) => Ref Output -> Ref a -> IO ())} {open re
   code {do {
        bl <- getLabel (safeCast b :: Ref Button);
        bv <- getValue (safeCast b :: Ref Button);
-       let { msg = "Label: '" ++ bl ++ "'Value: " ++ (show bv) };
+       let { msg = "Label: '" `T.append` bl `T.append` "'Value: " `T.append` (T.pack (show bv)) };
        setValue cb_info msg Nothing;       
        redraw cb_info;
      }} {selected
@@ -17,7 +17,7 @@ Function {button_cb((Parent a Button) => Ref Output -> Ref a -> IO ())} {open re
 Function {make_window(IO (Ref Window))} {open
 } {
   Fl_Window window {open
-    xywh {461 67 365 210} type Double visible
+    xywh {1 1 2878 1618} type Double hide
   } {
     Fl_Button button_A1 {
       label {&Fl_Button A1}

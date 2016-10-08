@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE CPP              #-}
 {-# LANGUAGE FlexibleContexts #-}
 module TreeCallbacks where
@@ -13,6 +14,8 @@ import           Text.Printf
 import           Foreign.C.String
 import           Foreign.C.Types
 import           Data.Bits
+import qualified Data.Text as T
+
 g_cb_counter :: IORef Int
 g_cb_counter = unsafePerformIO $ newIORef 0
 
@@ -36,7 +39,8 @@ treeCallback tree = do
   modifyIORef g_cb_counter (\c' -> c' + 1)
   item <- getCallbackItem tree
   reason <- getCallbackReason tree
-  let reason_string =
+  let reason_string :: String
+      reason_string =
         case reason of
           TreeReasonNone       -> "none"
           TreeReasonSelected   -> "selected"
@@ -48,7 +52,7 @@ treeCallback tree = do
   case item of
     Just i -> do
       itemLabel <- getLabel i
-      printf "TREE CALLBACK: label='%s' reason='%s' changed='%s'" itemLabel reason_string
+      printf "TREE CALLBACK: label='%s' reason='%s' changed='%s'" (T.unpack itemLabel) reason_string
         (show has_changed)
       clicks <- FL.eventClicks
       if (clicks > 0)
@@ -76,7 +80,7 @@ marginleft_slider_callback tree slider = do
 marginbottom_slider_callback :: Ref Tree -> Ref ValueSlider -> IO ()
 marginbottom_slider_callback tree slider = do
   deactivate slider
-  setTooltip slider ("DISABLED.\n" ++ "Set FLTK_ABI_VERSION to 10301 (or higher)\n" ++ "to enable this feature")
+  setTooltip slider ("DISABLED.\n" `T.append` "Set FLTK_ABI_VERSION to 10301 (or higher)\n" `T.append` "to enable this feature")
 
 linespacing_slider_callback :: Ref Tree -> Ref ValueSlider -> IO ()
 linespacing_slider_callback tree slider = do
@@ -99,7 +103,7 @@ labelmarginleft_slider_callback tree slider = do
 widgetmarginleft_slider_callback :: Ref Tree -> Ref ValueSlider -> IO ()
 widgetmarginleft_slider_callback tree slider = do
   deactivate slider
-  setTooltip slider ("DISABLED.\n" ++ "Set FLTK_ABI_VERSION to 10301 (or higher)\n" ++ "to enable this feature")
+  setTooltip slider ("DISABLED.\n" `T.append` "Set FLTK_ABI_VERSION to 10301 (or higher)\n" `T.append` "to enable this feature")
 
 openchild_marginbottom_slider_callback :: Ref Tree -> Ref ValueSlider -> IO ()
 openchild_marginbottom_slider_callback tree slider = do
@@ -236,7 +240,7 @@ selectmode_chooser_callback tree chooser = do
 reselectmode_chooser_callback :: Ref Tree -> Ref Choice -> IO ()
 reselectmode_chooser_callback _ chooser = do
   deactivate chooser
-  setTooltip chooser ("DISABLED.\n" ++ "Set FLTK_ABI_VERSION to 10301 (or higher)\n" ++ "to enable this feature")
+  setTooltip chooser ("DISABLED.\n" `T.append` "Set FLTK_ABI_VERSION to 10301 (or higher)\n" `T.append` "to enable this feature")
 
 whenmode_chooser_callback :: Ref Tree -> Ref Choice -> IO ()
 whenmode_chooser_callback tree chooser = do
@@ -254,7 +258,7 @@ set_tree_showroot tree button = getValue button >>= setShowroot tree
 radio_button_deactivate_callback :: Ref Window -> Ref CheckButton -> IO ()
 radio_button_deactivate_callback window button = do
   deactivate button
-  setTooltip button ("DISABLED.\n" ++ "Set FLTK_ABI_VERSION to 10301 (or higher)\n" ++ "to enable this feature")
+  setTooltip button ("DISABLED.\n" `T.append` "Set FLTK_ABI_VERSION to 10301 (or higher)\n" `T.append` "to enable this feature")
   redraw window
 
 goto_next_selected_item :: Ref Tree -> Ref Button -> IO ()
@@ -401,7 +405,7 @@ rebuildTree tree button _ = do
                setLabelsize newIn (FontSize 10)
                setTextsize newIn (FontSize 10)
                setAlign newIn alignRight
-               setTooltip newIn ("Fl_Input inside tree.\n" ++
+               setTooltip newIn ("Fl_Input inside tree.\n" `T.append`
                                  "The widget's label 'Fl_Input test' should appear to the widget's right.")
                setWidget child (Just newIn)
                end tree
@@ -418,8 +422,8 @@ rebuildTree tree button _ = do
                writeIORef tree_but (Just newButton)
                setLabelsize newButton (FontSize 10)
                setCallback newButton (tree_button_cb tree)
-               setTooltip newButton ("Button inside tree.\n" ++
-                                     "If 'Item h() from widget' enabled, " ++
+               setTooltip newButton ("Button inside tree.\n" `T.append`
+                                     "If 'Item h() from widget' enabled, " `T.append`
                                      "pressing button enlarges it.")
                setWidget child (Just newButton)
                end tree
@@ -428,9 +432,9 @@ rebuildTree tree button _ = do
   bbChild04 <- findItem tree "Bbb/child-04"
   maybe (return ())
         (\child ->
-           let tipmsg = "A group of two buttons inside the tree.\n" ++
-                        "If 'Item h() from widget' enabled, " ++
-                        "pressing either button enlarges the group " ++
+           let tipmsg = "A group of two buttons inside the tree.\n" `T.append`
+                        "If 'Item h() from widget' enabled, " `T.append`
+                        "pressing either button enlarges the group " `T.append`
                         "and both buttons together."
            in
            do
@@ -485,8 +489,8 @@ rebuildTree tree button _ = do
   add tree "Long Line/Longer Line/The quick brown fox jumped over the lazy dog. ---------------- 0123456789"
 
   mapM_ (\t ->
-           let s :: String
-               s = printf "500 Items/item %04d" ((t + 1) :: Int)
+           let s :: T.Text
+               s = T.pack (printf "500 Items/item %04d" ((t + 1) :: Int))
            in add tree s)
         [0 .. 499]
   close tree (TreeItemNameLocator (TreeItemName "500 Items"))
@@ -501,8 +505,8 @@ showpathname_button_callback tree button = do
            path <- itemPathname tree i
            case path of
             Just p -> do
-              l <- getLabel i >>= \s -> return (if (null s) then "???" else s)
-              flMessage (printf "Pathname for '%s' is: \"%s\"" l p)
+              l <- getLabel i >>= \s -> return (if (T.null s) then "???" else s)
+              flMessage (T.pack (printf "Pathname for '%s' is: \"%s\"" (T.unpack l) (T.unpack p)))
             Nothing -> flMessage "itemPathname returned Nothing (NOT FOUND)")
         item
 
@@ -785,8 +789,8 @@ add20k_button_callback tree _ = do
             parent' <- getParent i >>= maybe (return root') (return . Just)
             maybe (return ())
                   (\p' -> do
-                    mapM_ (\item_id' -> let s :: String
-                                            s = printf "Item #%d" ((item_id' :: Int) + 1)
+                    mapM_ (\item_id' -> let s :: T.Text
+                                            s = (T.pack (printf "Item #%d" ((item_id' :: Int) + 1)))
                                         in
                                         add tree s)
                            [0 .. 19999]
@@ -908,7 +912,7 @@ showselected_button_callback :: Ref Tree -> Ref Button -> IO ()
 showselected_button_callback tree button = do
   print "--- SELECTED ITEMS\n"
   items' <- getMatchingItems tree isSelected
-  mapM_ (\i -> getLabel i >>= \l -> printf "\t%s\n" (if (null l) then "???" else l)) items'
+  mapM_ (\i -> getLabel i >>= \l -> printf "\t%s\n" (if (T.null l) then "???" else l)) items'
 
 clearselected_button_callback :: Ref Tree -> Ref Button -> IO ()
 clearselected_button_callback tree button = do
@@ -980,32 +984,32 @@ nextselected_button_callback tree button = do
     walkDown (Just i) = do
       next' <- nextSelectedItemAfterItem tree i (Just SearchDirectionDown)
       l' <- getLabel i
-      printf "   Selected item: %s\n" (if (null l') then "<nolabel>" else l')
+      printf "   Selected item: %s\n" (if (T.null l') then "<nolabel>" else l')
       walkDown next'
     walkUp :: Maybe (Ref TreeItem) -> IO ()
     walkUp Nothing = return ()
     walkUp (Just i) = do
       next' <- nextSelectedItemAfterItem tree i (Just SearchDirectionUp)
       l' <- getLabel i
-      printf "   Selected item: %s\n" (if (null l') then "<nolabel>" else l')
+      printf "   Selected item: %s\n" (if (T.null l') then "<nolabel>" else l')
       walkUp next'
 
-selectPath :: Ref Tree -> String -> Ref LightButton -> IO ()
+selectPath :: Ref Tree -> T.Text -> Ref LightButton -> IO ()
 selectPath tree path button = do
   i <- findItem tree path
   case i of
-    Nothing -> flAlert $ "FAIL: Couldn't find item " ++ (show path) ++ "???"
+    Nothing -> flAlert $ "FAIL: Couldn't find item " `T.append` (T.pack (show path)) `T.append` "???"
     (Just i') -> do
       onoff <- getValue button
       if onoff
         then select tree (TreeItemPointerLocator (TreeItemPointer i')) >> return ()
         else deselect tree (TreeItemPointerLocator (TreeItemPointer i')) >> return ()
 
-selectChildrenWithPath :: Ref Tree -> String -> Ref LightButton -> IO ()
+selectChildrenWithPath :: Ref Tree -> T.Text -> Ref LightButton -> IO ()
 selectChildrenWithPath tree path button = do
   i <- findItem tree path
   case i of
-    Nothing -> flAlert $ "FAIL: Couldn't find item " ++ (show path) ++ "???"
+    Nothing -> flAlert $ "FAIL: Couldn't find item " `T.append` (T.pack (show path)) `T.append` "???"
     (Just _) -> do
       onoff <- getValue button
       if onoff
@@ -1086,74 +1090,74 @@ x_item_labelbgcolor_button_callback tree _updateColorChips _ = do
   redraw tree
 testsuggs_button_callback :: Ref Button -> IO ()
 testsuggs_button_callback button =
-  let helpmsg = "CHILD WIDGET SIZING TESTS\n" ++
-                "=========================\n" ++
-                "   1) Start program\n" ++
-                "   2) Click the 'ccc button' and D1/D2 buttons.\n" ++
-                "      Their sizes should not change.\n" ++
-                "   3) Click the 'Item h() from widget' checkbox.\n" ++
-                "   4) Click the 'ccc button' and D1/D2 buttons.\n" ++
-                "      Their sizes should change, getting larger vertically.\n" ++
-                "      This validates that widget's size can affect the tree.\n" ++
-                "   5) Disable the checkbox, widgets should resize back to the\n" ++
-                "      size of the other items.\n" ++
-                "   6) Hit ^A to select all items\n" ++
-                "   7) Under 'Selected Items', drag the 'Label Size' slider around.\n" ++
-                "      All the item's height should change, as well as child widgets.\n" ++
-                "   8) Put Label Size' slider back to normal\n" ++
-                "\n" ++
-                "CHILD WIDGET + LABEL ITEM DRAWING TESTS\n" ++
-                "=======================================\n" ++
-                "   1) Start program\n" ++
-                "   2) Click 'Show label + widget'.\n" ++
-                "      The widgets should all show item labels to their left.\n" ++
-                "   3) Disable same, item labels should disappear,\n" ++
-                "      showing the widgets in their place.\n" ++
-                "\n" ++
-                "COLORS\n" ++
-                "======\n" ++
-                "   1) Start program\n" ++
-                "   2) Change 'Tree Fonts+Colors' -> color()\n" ++
-                "   3) Entire tree's background color will change, including items.\n" ++
-                "   4) Change the 'Tree Fonts + Colors -> item_labelbgcolor()'\n" ++
-                "   6) Click the '111' item to select it.\n" ++
-                "   7) Click 'Test Operations -> Insert Above'\n" ++
-                "      New items should appear above the selected item using the new color.\n" ++
-                "      This color will be different from the background color.\n" ++
-                "   8) Change the 'Tree Fonts+Colors' -> color()\n" ++
-                "      The entire tree's bg should change, except the new items.\n" ++
-                "   9) Click the Tree Fonts+Colors -> item_labelbgcolor() 'X' button.\n" ++
-                "      This resets item_labelbgcolor() to the default 'transparent' color (0xffffffff)\n" ++
-                "  10) Again, click the 'Insert Above' button.\n" ++
-                "      New items will be created in the background color, and changing the color()\n" ++
-                "      should affect the new items too.\n" ++
-                "\n" ++
-                "SCROLLING\n" ++
-                "=========\n" ++
-                "   1) Open '500 items' and 'Long Line' so that both scrollbars appear:\n" ++
-                "        * The 'focus box' for the selected item should not be clipped\n" ++
-                "          horizontally by the vertical scrollbar.\n" ++
-                "        * Resizing the window horizontally should resize the focus box\n" ++
-                "        * Scrolling vertically/horizontally should show reveal all\n" ++
-                "          edges of the tree. One *exception* is the widget label\n" ++
-                "          to the right of the 'ccc button'; labels aren't part\n" ++
-                "          of the widget, and therefore don't affect scroll tabs\n" ++
-                "   2) Scroll vertical scroller to the middle of the tree\n" ++
-                "   3) Left click and drag up/down to extend the selection:\n" ++
-                "        * Selection should autoscroll if you drag off the top/bottom\n" ++
-                "        * Selection should work *even* if you drag horizontally\n" ++
-                "          off the window edge; moving up/down outside the window\n" ++
-                "          should continue to autoscroll\n" ++
-                "   4) Click either of the the scrollbar tabs and drag:\n" ++
-                "        * Even if you drag off the scrollbar, the scrollbar\n" ++
-                "          tab should continue to move\n" ++
-                "        * Should continue to work if you drag off the window edge\n" ++
-                "          horizontally drag off the window.\n" ++
-                "   5) Click 'Bbb' and hit 'Add 20,000', then position the\n" ++
-                "      'ccc button' so it's partially obscured by a scrollbar tab:\n" ++
-                "        * Clicking the obscured button should work\n" ++
-                "        * Clicking on the tab over the button should not 'click through'\n" ++
-                "          to the button.\n" ++
+  let helpmsg = "CHILD WIDGET SIZING TESTS\n" `T.append`
+                "=========================\n" `T.append`
+                "   1) Start program\n" `T.append`
+                "   2) Click the 'ccc button' and D1/D2 buttons.\n" `T.append`
+                "      Their sizes should not change.\n" `T.append`
+                "   3) Click the 'Item h() from widget' checkbox.\n" `T.append`
+                "   4) Click the 'ccc button' and D1/D2 buttons.\n" `T.append`
+                "      Their sizes should change, getting larger vertically.\n" `T.append`
+                "      This validates that widget's size can affect the tree.\n" `T.append`
+                "   5) Disable the checkbox, widgets should resize back to the\n" `T.append`
+                "      size of the other items.\n" `T.append`
+                "   6) Hit ^A to select all items\n" `T.append`
+                "   7) Under 'Selected Items', drag the 'Label Size' slider around.\n" `T.append`
+                "      All the item's height should change, as well as child widgets.\n" `T.append`
+                "   8) Put Label Size' slider back to normal\n" `T.append`
+                "\n" `T.append`
+                "CHILD WIDGET + LABEL ITEM DRAWING TESTS\n" `T.append`
+                "=======================================\n" `T.append`
+                "   1) Start program\n" `T.append`
+                "   2) Click 'Show label + widget'.\n" `T.append`
+                "      The widgets should all show item labels to their left.\n" `T.append`
+                "   3) Disable same, item labels should disappear,\n" `T.append`
+                "      showing the widgets in their place.\n" `T.append`
+                "\n" `T.append`
+                "COLORS\n" `T.append`
+                "======\n" `T.append`
+                "   1) Start program\n" `T.append`
+                "   2) Change 'Tree Fonts+Colors' -> color()\n" `T.append`
+                "   3) Entire tree's background color will change, including items.\n" `T.append`
+                "   4) Change the 'Tree Fonts + Colors -> item_labelbgcolor()'\n" `T.append`
+                "   6) Click the '111' item to select it.\n" `T.append`
+                "   7) Click 'Test Operations -> Insert Above'\n" `T.append`
+                "      New items should appear above the selected item using the new color.\n" `T.append`
+                "      This color will be different from the background color.\n" `T.append`
+                "   8) Change the 'Tree Fonts+Colors' -> color()\n" `T.append`
+                "      The entire tree's bg should change, except the new items.\n" `T.append`
+                "   9) Click the Tree Fonts+Colors -> item_labelbgcolor() 'X' button.\n" `T.append`
+                "      This resets item_labelbgcolor() to the default 'transparent' color (0xffffffff)\n" `T.append`
+                "  10) Again, click the 'Insert Above' button.\n" `T.append`
+                "      New items will be created in the background color, and changing the color()\n" `T.append`
+                "      should affect the new items too.\n" `T.append`
+                "\n" `T.append`
+                "SCROLLING\n" `T.append`
+                "=========\n" `T.append`
+                "   1) Open '500 items' and 'Long Line' so that both scrollbars appear:\n" `T.append`
+                "        * The 'focus box' for the selected item should not be clipped\n" `T.append`
+                "          horizontally by the vertical scrollbar.\n" `T.append`
+                "        * Resizing the window horizontally should resize the focus box\n" `T.append`
+                "        * Scrolling vertically/horizontally should show reveal all\n" `T.append`
+                "          edges of the tree. One *exception* is the widget label\n" `T.append`
+                "          to the right of the 'ccc button'; labels aren't part\n" `T.append`
+                "          of the widget, and therefore don't affect scroll tabs\n" `T.append`
+                "   2) Scroll vertical scroller to the middle of the tree\n" `T.append`
+                "   3) Left click and drag up/down to extend the selection:\n" `T.append`
+                "        * Selection should autoscroll if you drag off the top/bottom\n" `T.append`
+                "        * Selection should work *even* if you drag horizontally\n" `T.append`
+                "          off the window edge; moving up/down outside the window\n" `T.append`
+                "          should continue to autoscroll\n" `T.append`
+                "   4) Click either of the the scrollbar tabs and drag:\n" `T.append`
+                "        * Even if you drag off the scrollbar, the scrollbar\n" `T.append`
+                "          tab should continue to move\n" `T.append`
+                "        * Should continue to work if you drag off the window edge\n" `T.append`
+                "          horizontally drag off the window.\n" `T.append`
+                "   5) Click 'Bbb' and hit 'Add 20,000', then position the\n" `T.append`
+                "      'ccc button' so it's partially obscured by a scrollbar tab:\n" `T.append`
+                "        * Clicking the obscured button should work\n" `T.append`
+                "        * Clicking on the tab over the button should not 'click through'\n" `T.append`
+                "          to the button.\n" `T.append`
                 ""
   in do
   dialog' <- readIORef helpDialog

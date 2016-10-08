@@ -2,7 +2,7 @@
 version 1.0303 
 header_name {.h} 
 code_name {.cxx}
-decl {import System.Exit} {selected private local
+decl {import System.Exit} {private local
 } 
 
 Function {make_window(IO (Ref Window))} {open
@@ -10,7 +10,7 @@ Function {make_window(IO (Ref Window))} {open
   code {let { message_button_callback :: Ref Button -> IO ();
       message_button_callback _ = 
         flMessage ("Test to see if this modal window prevents you from "
-                   ++ "changing the tabs. It should.");
+                   `T.append` "changing the tabs. It should.");
       test_event_blocking_callback :: Ref Button -> IO ();
       test_event_blocking_callback _ = 
         flMessage "Make sure you cannot change the tabs while this modal window is up";
@@ -32,10 +32,11 @@ Function {make_window(IO (Ref Window))} {open
                then return ();
                else setValue wizard (Just (cs !! (length cs - 1)));
                }
-     }} {}
+     }} {selected
+  }
   Fl_Window foo_window {
     label {Comparison of Fl_Tab (left) vs. Fl_Wizard (right)} open
-    xywh {423 205 640 335} type Double resizable visible
+    xywh {424 206 638 333} type Double resizable visible
   } {
     Fl_Box {} {
       label {class Fl_Tabs}
