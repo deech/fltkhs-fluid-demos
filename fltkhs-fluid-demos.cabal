@@ -37,6 +37,7 @@ Executable fltkhs-fluid-radio
   default-extensions: TypeFamilies
   if os(windows)
    ghc-Options: -optl-mwindows
+   ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if os(darwin)
    ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
@@ -58,6 +59,7 @@ Executable fltkhs-fluid-tabs
   Other-Modules: Tabs
   if os(windows)
    ghc-Options: -optl-mwindows
+   ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if os(darwin)
    ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
@@ -80,6 +82,7 @@ Executable fltkhs-fluid-valuators
   Other-Modules: Valuators
   if os(windows)
    ghc-Options: -optl-mwindows
+   ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if os(darwin)
    ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
@@ -100,6 +103,7 @@ Executable fltkhs-fluid-inactive
   Other-Modules: Inactive
   if os(windows)
    ghc-Options: -optl-mwindows
+   ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if os(darwin)
    ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
@@ -119,6 +123,7 @@ Executable fltkhs-fluid-fast-slow
      ghc-Options: -fno-specialise -fmax-simplifier-iterations=0 -fsimplifier-phases=0
   Other-Modules: FastSlow
   if os(windows)
+   ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
    ghc-Options: -optl-mwindows
   if os(darwin)
    ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
@@ -137,6 +142,7 @@ Executable fltkhs-fluid-tree
   ghc-Options: -threaded
   if os(windows)
    ghc-Options: -optl-mwindows
+   ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if impl(ghc >= 7.10) && flag(FastCompile)
      ghc-Options: -O0
   Other-Modules:
