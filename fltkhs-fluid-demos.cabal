@@ -39,7 +39,7 @@ Executable fltkhs-fluid-radio
    ghc-Options: -optl-mwindows
    ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if os(darwin)
-   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
+   ghc-Options: "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -61,7 +61,7 @@ Executable fltkhs-fluid-tabs
    ghc-Options: -optl-mwindows
    ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if os(darwin)
-   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
+   ghc-Options: "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -84,7 +84,7 @@ Executable fltkhs-fluid-valuators
    ghc-Options: -optl-mwindows
    ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if os(darwin)
-   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
+   ghc-Options: "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -105,7 +105,7 @@ Executable fltkhs-fluid-inactive
    ghc-Options: -optl-mwindows
    ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
   if os(darwin)
-   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
+   ghc-Options: "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -126,7 +126,7 @@ Executable fltkhs-fluid-fast-slow
    ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
    ghc-Options: -optl-mwindows
   if os(darwin)
-   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
+   ghc-Options: "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
 
@@ -149,6 +149,6 @@ Executable fltkhs-fluid-tree
                 Tree,
                 TreeCallbacks
   if os(darwin)
-   ghc-Options: -pgml g++ "-optl-Wl,-lfltkc"
+   ghc-Options: "-optl-Wl,-lfltkc"
   if !os(darwin) && !os(windows)
     ghc-Options: -pgml g++ "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
