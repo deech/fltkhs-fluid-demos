@@ -346,21 +346,22 @@ assignUserIcons tree button = do
      documentXpm =
         [
           "11 11 3 1",
-          ".  c None",
-          "x  c #d8d8f8",
-          "@  c #202060",
-          ".@@@@@@@@@.",
-          ".@xxxxxxx@.",
-          ".@xxxxxxx@.",
-          ".@xxxxxxx@.",
-          ".@xxxxxxx@.",
-          ".@xxxxxxx@.",
-          ".@xxxxxxx@.",
-          ".@xxxxxxx@.",
-          ".@xxxxxxx@.",
-          ".@xxxxxxx@.",
-          ".@@@@@@@@@."
+           ".  c None",
+           "x  c #d8d8f8",
+           "@  c #202060",
+           ".@@@@@@@@@.",
+           ".@xxxxxxx@.",
+           ".@xxxxxxx@.",
+           ".@xxxxxxx@.",
+           ".@xxxxxxx@.",
+           ".@xxxxxxx@.",
+           ".@xxxxxxx@.",
+           ".@xxxxxxx@.",
+           ".@xxxxxxx@.",
+           ".@xxxxxxx@.",
+           ".@@@@@@@@@."
         ]
+
 
 tree_button_cb :: Ref Tree -> Ref Button -> IO ()
 tree_button_cb tree button = do

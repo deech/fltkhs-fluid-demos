@@ -1,5 +1,5 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0303
+version 1.0304
 header_name {.h}
 code_name {.cxx}
 decl {import TreeCallbacks} {private local
@@ -12,7 +12,7 @@ Function {make_window(IO ( Ref Window))} {open
 } {
   Fl_Window window {
     label tree open
-    xywh {115 293 1045 580} type Double visible
+    xywh {116 294 1043 578} type Double visible
   } {
     Fl_Group tree {
       label Tree
@@ -114,7 +114,7 @@ item_draw_mode(FL_TREE_ITEM_DRAW_LABEL_AND_WIDGET)} xywh {505 160 155 16} type H
       }
       Fl_Choice collapseicons_chooser {
         label {Collapse icons}
-        callback {(collapseicons_chooser_callback tree)} open selected
+        callback {(collapseicons_chooser_callback tree)} open
         tooltip {Tests Fl_Tree::openicon(), Fl_Tree::closeicon() and Fl_Tree::showcollapse().} xywh {520 225 140 21} down_box BORDER_BOX labelsize 12 textsize 11
       } {
         MenuItem {} {
@@ -150,13 +150,13 @@ item_draw_mode(FL_TREE_ITEM_DRAW_LABEL_AND_WIDGET)} xywh {505 160 155 16} type H
         }
       }
       Fl_Choice selectmode_chooser {
-        label {Selection Mode} open
+        label {Selection Mode}
+        callback {(selectmode_chooser_callback tree)} open
         tooltip {Tests Fl_Tree::selectmode()
 Sets how Fl_Tree handles mouse selection of tree items.
     NONE	-- Not selectable by keyboard/mouse
     SINGLE	-- Only one item at a time selectable by keyboard/mouse
     MULTI	-- Multiple items selectable} xywh {520 273 140 21} down_box BORDER_BOX labelsize 12 textsize 11
-        callback {(selectmode_chooser_callback tree)}
         code0 {setValue selectmode_chooser (MenuItemByIndex (MenuItemIndex 2))}
         code1 {selectmode_chooser_callback tree selectmode_chooser}
       } {
@@ -751,15 +751,7 @@ The value is normally 0, which causes Fl_Tree to use the global Fl::scrollbar_si
       xywh {0 263 15 14}
     }
   }
-  code {let { updateColorChips_ = updateColorChips color_button labelcolor_button selection_color_button item_labelfgcolor_button item_labelbgcolor_button all_labelfgcolor_button all_labelbgcolor_button tree window }} {}
-  code {setCallback color_button (color_button_callback tree updateColorChips_)} {}
-  code {setCallback labelcolor_button (updateColor tree getLabelcolor setColor setLabelcolor window)} {}
-  code {setCallback selection_color_button (updateColor tree getSelectionColor setColor setSelectionColor window)} {}
-  code {setCallback item_labelfgcolor_button (updateColor tree getItemLabelfgcolor setColor setItemLabelfgcolor window)} {}
-  code {setCallback item_labelbgcolor_button (updateColor tree getItemLabelbgcolor setColor setItemLabelbgcolor window)} {}
-  code {setCallback x_item_labelbgcolor_button (x_item_labelbgcolor_button_callback tree updateColorChips_)} {}
-  code {rootLabel tree "ROOT";
-rebuildTree tree usericon_radio color_button;
+  code {rebuildTree tree usericon_radio color_button;
 setResizable window (Just tree);
 winW <- getW window;
 winH <- getH window;
@@ -770,6 +762,16 @@ case when_ of {
   (WhenChanged : []) -> setValue whenmode_chooser (MenuItemByIndex (MenuItemIndex 2)) >> return ();
   (WhenNever : []) -> setValue whenmode_chooser (MenuItemByIndex (MenuItemIndex 0)) >> return ();
   _ -> return ();
-};} {}
+};
+rootLabel tree "ROOT";
+getSelectedItemFgColor tree >>= setColor all_labelfgcolor_button;} {selected
+  }
+  code {let { updateColorChips_ = updateColorChips color_button labelcolor_button selection_color_button item_labelfgcolor_button item_labelbgcolor_button all_labelfgcolor_button all_labelbgcolor_button tree window }} {}
+  code {setCallback color_button (color_button_callback tree updateColorChips_)} {}
+  code {setCallback labelcolor_button (updateColor tree getLabelcolor setColor setLabelcolor window)} {}
+  code {setCallback selection_color_button (updateColor tree getSelectionColor setColor setSelectionColor window)} {}
+  code {setCallback item_labelfgcolor_button (updateColor tree getItemLabelfgcolor setColor setItemLabelfgcolor window)} {}
+  code {setCallback item_labelbgcolor_button (updateColor tree getItemLabelbgcolor setColor setItemLabelbgcolor window)} {}
+  code {setCallback x_item_labelbgcolor_button (x_item_labelbgcolor_button_callback tree updateColorChips_)} {}
   code {return window;} {}
 }
