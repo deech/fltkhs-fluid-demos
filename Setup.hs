@@ -15,8 +15,8 @@ fluidToHaskellProgram :: Program
 fluidToHaskellProgram =
   (simpleProgram "fltkhs-fluidtohs") { programFindVersion = (\_ _ -> return Nothing) }
 
-ppFluidToHaskell :: BuildInfo -> LocalBuildInfo -> PreProcessor
-ppFluidToHaskell bi lbi =
+ppFluidToHaskell :: BuildInfo -> LocalBuildInfo -> ComponentLocalBuildInfo -> PreProcessor
+ppFluidToHaskell bi lbi clbi =
   PreProcessor
     { platformIndependent = True
     , runPreProcessor = \(inBaseDir, inRelativeFile) (outBaseDir, outRelativeFile) verbosity -> do
