@@ -11,23 +11,13 @@ Most of the demos are faithful ports of those shipped with FLTK so the user may 
 and learn how Fluid can be used to generate Haskell. More comprehensive documentation is
 planned, but until then hopefully side-by-side comparison is a good stopgap.
 
-__Update__: The [Hackage package] [2] will no longer be updated. Please either clone
-this repo or download it as an archive. The goal is that these demos should always build
-with the latest version of [FLTKHS] [1].
-
 ## Installation
 
-In order to install and run these demos you will first need to install the FLTK C++ library.
-Please follow the installation instructions for [FLTKHS][4] but only to the point of installing
-the C++ library. The full installation is geared toward getting a minimal `hello world` up and
-running so it's not bad to do it all, just involves some unnecessary steps if all you care about
-is the demos.
-
-Once the C++ library is installed the only thing left to do is:
+[FLTKHS] [1] now bundles the [FLTK] [5] source so all you need to do is:
 
 ```
 > git clone http://github.com/deech/fltkhs-fluid-demos
-> stack install
+> stack install --flag fltkhs:bundled
 > stack exec fltkhs-fluid-tree
 ```
 
@@ -35,3 +25,4 @@ Once the C++ library is installed the only thing left to do is:
   [2]: http://hackage.haskell.org/package/fltkhs-fluid-demos
   [3]: https://en.wikipedia.org/wiki/FLUID
   [4]: https://github.com/deech/fltkhs#quick-install
+  [5]: http://fltk.org
