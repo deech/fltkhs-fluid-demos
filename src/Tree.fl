@@ -768,10 +768,11 @@ getSelectedItemFgColor tree >>= setColor all_labelfgcolor_button;} {selected
   }
   code {let { updateColorChips_ = updateColorChips color_button labelcolor_button selection_color_button item_labelfgcolor_button item_labelbgcolor_button all_labelfgcolor_button all_labelbgcolor_button tree window }} {}
   code {setCallback color_button (color_button_callback tree updateColorChips_)} {}
-  code {setCallback labelcolor_button (updateColor tree getLabelcolor setColor setLabelcolor window)} {}
-  code {setCallback selection_color_button (updateColor tree getSelectionColor setColor setSelectionColor window)} {}
-  code {setCallback item_labelfgcolor_button (updateColor tree getItemLabelfgcolor setColor setItemLabelfgcolor window)} {}
-  code {setCallback item_labelbgcolor_button (updateColor tree getItemLabelbgcolor setColor setItemLabelbgcolor window)} {}
+  code {setCallback labelcolor_button (updateColor tree getLabelcolor setColor setLabelcolor updateColorChips_ window)} {}
+  code {setCallback selection_color_button (updateColor tree getSelectionColor setColor setSelectionColor updateColorChips_ window)} {}
+  code {setCallback item_labelfgcolor_button (updateColor tree getItemLabelfgcolor setColor setItemLabelfgcolor updateColorChips_ window)} {}
+  code {setCallback item_labelbgcolor_button (updateColor tree getItemLabelbgcolor setColor setItemLabelbgcolor updateColorChips_ window)} {}
   code {setCallback x_item_labelbgcolor_button (x_item_labelbgcolor_button_callback tree updateColorChips_)} {}
+  code {updateColorChips_} {}
   code {return window;} {}
 }

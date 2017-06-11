@@ -1060,14 +1060,15 @@ updateColorChips
      getItemLabelbgcolor tree >>= setColor all_labelbgcolor_button
      redraw window
 
-updateColor :: Ref Tree -> (Ref Tree -> IO Color) -> (Ref Button -> Color -> IO ()) -> (Ref Tree -> Color -> IO ()) -> Ref Window -> Ref Button -> IO ()
-updateColor tree colorGetter buttonColorSetter treeColorSetter window button = do
+updateColor :: Ref Tree -> (Ref Tree -> IO Color) -> (Ref Button -> Color -> IO ()) -> (Ref Tree -> Color -> IO ()) -> IO () -> Ref Window -> Ref Button -> IO ()
+updateColor tree colorGetter buttonColorSetter treeColorSetter _updateColorChips window button = do
   v <- colorGetter tree
   res <- editColor v
   maybe (return ())
         (\c -> do
              buttonColorSetter button c
              treeColorSetter tree c
+             _updateColorChips
              redraw window
              )
         res
