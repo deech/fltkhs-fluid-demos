@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 module Main (main) where
 
 import Distribution.Simple
@@ -16,11 +17,23 @@ import Distribution.System (buildOS, OS(Windows, OSX))
 import Distribution.InstalledPackageInfo
 import System.IO.Error
 
+----------------------------------------
+-- compatibility between Cabal 1 and Cabal 2
+
+-- "If you have a custom-setup stanza, you should be able to use the MIN_VERSION_Cabal macro in your setup script."
+
+-- cabal >=2.0.0.2
+#if defined(MIN_VERSION_Cabal) && MIN_VERSION_Cabal(2,0,0)
+_PackageName = mkPackageName
+#else
+_PackageName = PackageName
+#endif
+
 main :: IO ()
 main = defaultMainWithHooks (simpleUserHooks { buildHook = myBuildHook, hookedPreProcessors = [("fl", ppFluidToHaskell)] })
 
 myBuildHook pkg_descr local_bld_info user_hooks bld_flags =
-  let fltkhsDependency = lookupDependency (installedPkgs local_bld_info) (Dependency (PackageName "fltkhs") anyVersion)
+  let fltkhsDependency = lookupDependency (installedPkgs local_bld_info) (Dependency (_PackageName "fltkhs") anyVersion)
       keepBuilding = (buildHook simpleUserHooks) pkg_descr local_bld_info user_hooks bld_flags
   in
   case fltkhsDependency of
@@ -46,8 +59,14 @@ updateEnv env value = do
                       )
                       old))
 
+-- cabal >=2.0.0.2
+#if defined(MIN_VERSION_Cabal) && MIN_VERSION_Cabal(2,0,0)
+ppFluidToHaskell :: BuildInfo -> LocalBuildInfo -> ComponentLocalBuildInfo -> PreProcessor
+ppFluidToHaskell bi lbi cli =
+#else
 ppFluidToHaskell :: BuildInfo -> LocalBuildInfo -> PreProcessor
 ppFluidToHaskell bi lbi =
+#endif
   PreProcessor
     { platformIndependent = True
     , runPreProcessor = \(inBaseDir, inRelativeFile) (outBaseDir, outRelativeFile) verbosity -> do
