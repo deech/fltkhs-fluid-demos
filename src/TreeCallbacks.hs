@@ -197,44 +197,44 @@ collapseicons_chooser_callback tree chooser =
   in do
   val <- getValue chooser
   case val of
-    (MenuItemIndex 0)-> do
+    (AtIndex 0)-> do
       setShowcollapse tree True
       setOpenicon tree (Nothing :: Maybe (Ref Image))
       setCloseicon tree (Nothing :: Maybe (Ref Image))
-    (MenuItemIndex 1) -> do
+    (AtIndex 1) -> do
       setShowcollapse tree True
       openPixmap <- pixmapNew (PixmapHs openXpm)
       setOpenicon tree (Just openPixmap)
       closePixmap <- pixmapNew (PixmapHs closeXpm)
       setCloseicon tree (Just closePixmap)
-    (MenuItemIndex 2) -> setShowcollapse tree False
+    (AtIndex 2) -> setShowcollapse tree False
     _ -> return ()
 
 connectorstyle_chooser_callback :: Ref Tree -> Ref Choice -> IO ()
 connectorstyle_chooser_callback tree chooser = do
    val <- getValue chooser
    case val of
-     (MenuItemIndex 0) -> setConnectorstyle tree TreeConnectorNone
-     (MenuItemIndex 1) -> setConnectorstyle tree TreeConnectorDotted
-     (MenuItemIndex 2) -> setConnectorstyle tree TreeConnectorSolid
+     (AtIndex 0) -> setConnectorstyle tree TreeConnectorNone
+     (AtIndex 1) -> setConnectorstyle tree TreeConnectorDotted
+     (AtIndex 2) -> setConnectorstyle tree TreeConnectorSolid
      _ -> return ()
 
 set_connectorstyle_chooser :: Ref Choice -> TreeConnector -> IO ()
 set_connectorstyle_chooser chooser connectorStyle =
     case connectorStyle of
-      TreeConnectorNone -> setValue chooser (MenuItemByIndex (MenuItemIndex 0)) >> return ()
-      TreeConnectorDotted -> setValue chooser (MenuItemByIndex (MenuItemIndex 1)) >> return ()
-      TreeConnectorSolid -> setValue chooser (MenuItemByIndex (MenuItemIndex 2)) >> return ()
+      TreeConnectorNone -> setValue chooser (MenuItemByIndex (AtIndex 0)) >> return ()
+      TreeConnectorDotted -> setValue chooser (MenuItemByIndex (AtIndex 1)) >> return ()
+      TreeConnectorSolid -> setValue chooser (MenuItemByIndex (AtIndex 2)) >> return ()
 
 selectmode_chooser_callback :: Ref Tree -> Ref Choice -> IO ()
 selectmode_chooser_callback tree chooser = do
    val <- getValue chooser
    let mode = case val of
-               (MenuItemIndex 0) -> TreeSelectNone
-               (MenuItemIndex 1) -> TreeSelectSingle
-               (MenuItemIndex 2) -> TreeSelectMulti
-               (MenuItemIndex 3) -> TreeSelectSingleDraggable
-               (MenuItemIndex _) -> TreeSelectSingle
+               (AtIndex 0) -> TreeSelectNone
+               (AtIndex 1) -> TreeSelectSingle
+               (AtIndex 2) -> TreeSelectMulti
+               (AtIndex 3) -> TreeSelectSingleDraggable
+               (AtIndex _) -> TreeSelectSingle
    setSelectmode tree mode
 
 reselectmode_chooser_callback :: Ref Tree -> Ref Choice -> IO ()
@@ -246,10 +246,10 @@ whenmode_chooser_callback :: Ref Tree -> Ref Choice -> IO ()
 whenmode_chooser_callback tree chooser = do
   val <- getValue chooser
   let whenMode = case val of
-                   (MenuItemIndex 0) -> WhenRelease
-                   (MenuItemIndex 1) -> WhenChanged
-                   (MenuItemIndex 2) -> WhenNever
-                   (MenuItemIndex _) -> WhenRelease
+                   (AtIndex 0) -> WhenRelease
+                   (AtIndex 1) -> WhenChanged
+                   (AtIndex 2) -> WhenNever
+                   (AtIndex _) -> WhenRelease
   setWhen tree [whenMode]
 
 set_tree_showroot ::  Ref Tree -> Ref CheckButton -> IO ()
@@ -843,13 +843,13 @@ withFoundItemOrDefault tree f pred fallback = do
 
 selected_labelfont_choice_callback :: Ref Tree -> Ref Choice -> IO ()
 selected_labelfont_choice_callback tree chooser = do
-  (MenuItemIndex idx) <- getValue chooser
+  (AtIndex idx) <- getValue chooser
   toSelectedItemOrAll tree (\i -> setLabelfont i (Font idx))
 
 assignTreeFontToButton :: Ref Tree -> Ref Choice -> IO ()
 assignTreeFontToButton tree chooser = do
   (Font fontNumber) <- getItemLabelfont tree
-  setValue chooser (MenuItemByIndex (MenuItemIndex fontNumber))
+  setValue chooser (MenuItemByIndex (AtIndex fontNumber))
   return ()
 
 selected_labelsize_slider_callback :: Ref Tree -> Ref ValueSlider -> IO ()
@@ -939,18 +939,18 @@ swapselected_button_callback tree button = do
 setLabelfontFromTree :: Ref Tree -> Ref Choice -> IO ()
 setLabelfontFromTree tree chooser = do
   (Font f) <- getLabelfont tree
-  setValue chooser (MenuItemByIndex (MenuItemIndex f))
+  setValue chooser (MenuItemByIndex (AtIndex f))
   redraw tree
 
 labelfont_choice_callback :: Ref Tree -> Ref Window -> Ref Choice -> IO ()
 labelfont_choice_callback tree window chooser = do
-  (MenuItemIndex val) <- getValue chooser
+  (AtIndex val) <- getValue chooser
   setLabelfont tree (Font val)
   redraw window
 
 item_labelfont_choice_callback :: Ref Tree -> Ref Choice -> IO ()
 item_labelfont_choice_callback tree chooser = do
-  (MenuItemIndex val) <- getValue chooser
+  (AtIndex val) <- getValue chooser
   setLabelfont tree (Font val)
   redraw tree
 

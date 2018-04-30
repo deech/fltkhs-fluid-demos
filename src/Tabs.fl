@@ -1,22 +1,22 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0303 
-header_name {.h} 
+version 1.0303
+header_name {.h}
 code_name {.cxx}
 decl {import System.Exit} {private local
-} 
+}
 
 Function {make_window(IO (Ref Window))} {open
 } {
   code {let { message_button_callback :: Ref Button -> IO ();
-      message_button_callback _ = 
+      message_button_callback _ =
         flMessage ("Test to see if this modal window prevents you from "
                    `T.append` "changing the tabs. It should.");
       test_event_blocking_callback :: Ref Button -> IO ();
-      test_event_blocking_callback _ = 
+      test_event_blocking_callback _ =
         flMessage "Make sure you cannot change the tabs while this modal window is up";
       first_button_callback :: Ref Wizard -> Ref Button -> IO ();
       first_button_callback wizard _ = do {
-         c <- getChild wizard 0;
+         c <- getChild wizard (AtIndex 0);
          maybe (return ())
                (setValue wizard . Just)
                c;
@@ -27,7 +27,7 @@ Function {make_window(IO (Ref Window))} {open
       next_button_callback wizard _ = next wizard;
       last_button_callback :: Ref Wizard -> Ref Button -> IO ();
       last_button_callback wizard _ =  do {
-               cs <- getArray wizard;   
+               cs <- getArray wizard;
                if (null cs)
                then return ();
                else setValue wizard (Just (cs !! (length cs - 1)));
@@ -306,4 +306,4 @@ Function {make_window(IO (Ref Window))} {open
     }
   }
   code {return foo_window;} {}
-} 
+}

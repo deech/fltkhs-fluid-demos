@@ -1,6 +1,6 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0303 
-header_name {.h} 
+version 1.0303
+header_name {.h}
 code_name {.cxx}
 Function {make_window(IO (Ref Window))} {open
 } {
@@ -61,7 +61,7 @@ Function {make_window(IO (Ref Window))} {open
       }
       Fl_Input input {
         xywh {195 50 195 30}
-        code0 {staticValue input "Input" Nothing}
+        code0 {staticValue input "Input"}
       }
       Fl_Menu_Button {} {
         label menu open
@@ -126,4 +126,4 @@ Function {make_window(IO (Ref Window))} {open
     }
   }
   code {return window} {}
-} 
+}
