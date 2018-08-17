@@ -753,8 +753,8 @@ The value is normally 0, which causes Fl_Tree to use the global Fl::scrollbar_si
   }
   code {rebuildTree tree usericon_radio color_button;
 setResizable window (Just tree);
-winW <- getW window;
-winH <- getH window;
+(Width winW) <- getW window;
+(Height winH) <- getH window;
 sizeRange window (Size (Width winW) (Height winH));
 when_ <- getWhen tree;
 case when_ of {

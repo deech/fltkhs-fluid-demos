@@ -371,10 +371,7 @@ tree_button_cb tree button = do
         else getParent button >>= return . maybe Nothing (Just . safeCast)
   case cw of
     Just cw' -> do
-       cwh <- getH cw'
-       cwx <- getX cw'
-       cwy <- getY cw'
-       cww <- getW cw'
+       (cwh, cwx, cwy, cww) <- fmap fromRectangle (getRectangle cw')
        let newHeight = if (cwh + 10 > 50) then 20 else cwh + 10
        resize cw' (toRectangle (cwx, cwy, cww, newHeight))
        redraw tree
@@ -446,8 +443,8 @@ rebuildTree tree button _ = do
                  newGroup <- groupNew (toRectangle (100,100,140,18)) Nothing
                  writeIORef tree_grp (Just newGroup)
                  setColor newGroup whiteColor
-                 grpX <- getX newGroup
-                 grpY <- getY newGroup
+                 (X grpX) <- getX newGroup
+                 (Y grpY) <- getY newGroup
                  begin newGroup
                  abut <- buttonNew (toRectangle (grpX, grpY + 2, 65,15)) (Just "D1")
                  setLabelsize abut (FontSize 10)
@@ -1167,8 +1164,8 @@ testsuggs_button_callback button =
     Nothing -> do
       groupSetCurrent (Nothing :: Maybe (Ref Group))
       win <- doubleWindowNew (toSize (600,600)) Nothing (Just "Test Suggestions")
-      winW <- getW win
-      winH <- getH win
+      (Width winW) <- getW win
+      (Height winH) <- getH win
       disp <- textDisplayNew (toRectangle (0,0,winW,winH)) Nothing
       buff <- textBufferNew Nothing Nothing
       setBuffer disp (Just buff)
