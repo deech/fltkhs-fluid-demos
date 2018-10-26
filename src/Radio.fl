@@ -1,6 +1,6 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0303 
-header_name {.h} 
+version 1.0303
+header_name {.h}
 code_name {.cxx}
 Function {button_cb((Parent a Button) => Ref Output -> Ref a -> IO ())} {open return_type {cb_info b}
 } {
@@ -8,11 +8,11 @@ Function {button_cb((Parent a Button) => Ref Output -> Ref a -> IO ())} {open re
        bl <- getLabel (safeCast b :: Ref Button);
        bv <- getValue (safeCast b :: Ref Button);
        let { msg = "Label: '" `T.append` bl `T.append` "'Value: " `T.append` (T.pack (show bv)) };
-       setValue cb_info msg Nothing;       
+       setValue cb_info msg;
        redraw cb_info;
      }} {selected
   }
-} 
+}
 
 Function {make_window(IO (Ref Window))} {open
 } {
@@ -103,4 +103,4 @@ setCallback button_radio_2 (button_cb cb_info);
 setCallback button_radio_3 (button_cb cb_info);
 setCallback button_radio_4 (button_cb cb_info);} {}
   code {return window} {}
-} 
+}

@@ -157,7 +157,7 @@ Sets how Fl_Tree handles mouse selection of tree items.
     NONE	-- Not selectable by keyboard/mouse
     SINGLE	-- Only one item at a time selectable by keyboard/mouse
     MULTI	-- Multiple items selectable} xywh {520 273 140 21} down_box BORDER_BOX labelsize 12 textsize 11
-        code0 {setValue selectmode_chooser (MenuItemByIndex (MenuItemIndex 2))}
+        code0 {setValue selectmode_chooser (MenuItemByIndex (AtIndex 2))}
         code1 {selectmode_chooser_callback tree selectmode_chooser}
       } {
         MenuItem {} {
@@ -184,7 +184,7 @@ Sets how Fl_Tree handles mouse selection of tree items.
 Enables 'reselect' events.
 These happen when someone selects an item already selected
 (mouse drags or multi-clicks)} xywh {520 297 140 21} down_box BORDER_BOX labelsize 12 textsize 11
-        code0 {setValue reselectmode_chooser (MenuItemByIndex (MenuItemIndex 1))}
+        code0 {setValue reselectmode_chooser (MenuItemByIndex (AtIndex 1))}
         code1 {doCallback reselectmode_chooser}
       } {
         MenuItem {} {
@@ -200,7 +200,7 @@ These happen when someone selects an item already selected
         label When
         callback {(whenmode_chooser_callback tree)}
         tooltip {Sets when() the tree's callback is invoked} xywh {520 323 140 21} down_box BORDER_BOX labelsize 12 textsize 11
-        code0 {setValue whenmode_chooser (MenuItemByIndex (MenuItemIndex 1))}
+        code0 {setValue whenmode_chooser (MenuItemByIndex (AtIndex 1))}
         code1 {whenmode_chooser_callback tree whenmode_chooser}
       } {
         MenuItem {} {
@@ -753,14 +753,14 @@ The value is normally 0, which causes Fl_Tree to use the global Fl::scrollbar_si
   }
   code {rebuildTree tree usericon_radio color_button;
 setResizable window (Just tree);
-winW <- getW window;
-winH <- getH window;
-sizeRange window winW winH;
+(Width winW) <- getW window;
+(Height winH) <- getH window;
+sizeRange window (Size (Width winW) (Height winH));
 when_ <- getWhen tree;
 case when_ of {
-  (WhenRelease : []) -> setValue whenmode_chooser (MenuItemByIndex (MenuItemIndex 1)) >> return ();
-  (WhenChanged : []) -> setValue whenmode_chooser (MenuItemByIndex (MenuItemIndex 2)) >> return ();
-  (WhenNever : []) -> setValue whenmode_chooser (MenuItemByIndex (MenuItemIndex 0)) >> return ();
+  (WhenRelease : []) -> setValue whenmode_chooser (MenuItemByIndex (AtIndex 1)) >> return ();
+  (WhenChanged : []) -> setValue whenmode_chooser (MenuItemByIndex (AtIndex 2)) >> return ();
+  (WhenNever : []) -> setValue whenmode_chooser (MenuItemByIndex (AtIndex 0)) >> return ();
   _ -> return ();
 };
 rootLabel tree "ROOT";

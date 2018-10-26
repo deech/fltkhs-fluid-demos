@@ -2,7 +2,6 @@ flags: {}
 extra-package-dbs: []
 packages:
 - '.'
-resolver: lts-8.13
+resolver: lts-12.12
 extra-deps:
-- fltkhs-0.5.4.1
-- text-1.2.2.1
+- fltkhs-0.6.0.0
