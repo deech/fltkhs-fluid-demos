@@ -367,7 +367,7 @@ tree_button_cb :: Ref Tree -> Ref Button -> IO ()
 tree_button_cb tree button = do
   button_label <- getLabel button
   cw <- if (button_label == "ccc button")
-        then return (Just (safeCast button :: Ref Widget))
+        then return (Just (safeCast button :: Ref WidgetBase))
         else getParent button >>= return . maybe Nothing (Just . safeCast)
   case cw of
     Just cw' -> do
