@@ -1,8 +1,11 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0303
+version 1.0400
 header_name {.h}
 code_name {.cxx}
 decl {import System.Exit} {private local
+}
+
+decl {import Graphics.UI.FLTK.LowLevel.FLTKHS} {selected private local
 }
 
 Function {make_window(IO (Ref Window))} {open
@@ -32,11 +35,10 @@ Function {make_window(IO (Ref Window))} {open
                then return ();
                else setValue wizard (Just (cs !! (length cs - 1)));
                }
-     }} {selected
-  }
+     }} {}
   Fl_Window foo_window {
     label {Comparison of Fl_Tab (left) vs. Fl_Wizard (right)} open
-    xywh {424 206 638 333} type Double resizable visible
+    xywh {424 206 635 330} type Double resizable visible
   } {
     Fl_Box {} {
       label {class Fl_Tabs}

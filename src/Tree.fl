@@ -1,5 +1,5 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0304
+version 1.0400
 header_name {.h}
 code_name {.cxx}
 decl {import TreeCallbacks} {private local
@@ -8,11 +8,14 @@ decl {import TreeCallbacks} {private local
 decl {import Data.IORef} {private local
 }
 
+decl {import Graphics.UI.FLTK.LowLevel.FLTKHS} {selected private local
+}
+
 Function {make_window(IO ( Ref Window))} {open
 } {
   Fl_Window window {
     label tree open
-    xywh {116 294 1043 578} type Double visible
+    xywh {116 294 1040 575} type Double visible
   } {
     Fl_Group tree {
       label Tree
@@ -764,8 +767,7 @@ case when_ of {
   _ -> return ();
 };
 rootLabel tree "ROOT";
-getSelectedItemFgColor tree >>= setColor all_labelfgcolor_button;} {selected
-  }
+getSelectedItemFgColor tree >>= setColor all_labelfgcolor_button;} {}
   code {let { updateColorChips_ = updateColorChips color_button labelcolor_button selection_color_button item_labelfgcolor_button item_labelbgcolor_button all_labelfgcolor_button all_labelbgcolor_button tree window }} {}
   code {setCallback color_button (color_button_callback tree updateColorChips_)} {}
   code {setCallback labelcolor_button (updateColor tree getLabelcolor setColor setLabelcolor updateColorChips_ window)} {}
@@ -773,6 +775,6 @@ getSelectedItemFgColor tree >>= setColor all_labelfgcolor_button;} {selected
   code {setCallback item_labelfgcolor_button (updateColor tree getItemLabelfgcolor setColor setItemLabelfgcolor updateColorChips_ window)} {}
   code {setCallback item_labelbgcolor_button (updateColor tree getItemLabelbgcolor setColor setItemLabelbgcolor updateColorChips_ window)} {}
   code {setCallback x_item_labelbgcolor_button (x_item_labelbgcolor_button_callback tree updateColorChips_)} {}
-  code {updateColorChips_} {}
+  code updateColorChips_ {}
   code {return window;} {}
 }
