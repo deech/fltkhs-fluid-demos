@@ -1,7 +1,8 @@
 flags: {}
-extra-package-dbs: []
-packages:
-- '.'
-resolver: lts-15.0
+resolver: nightly-2020-07-23
 extra-deps:
-- fltkhs-0.8.0.0
+- git: /home/deech/Haskell/fltkhs
+  commit: 652c262c72df0014a9de4c8ae7d234e07505584a
+
+- git: /home/deech/Haskell/fltkhs-fluidtohs
+  commit: 5c0d3be266a020c1babe31b4a642ffa1273cff42
